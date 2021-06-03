@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <meta charset='utf-8'>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+            html, body {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #25252D;
+                font-family: 'Nunito';
+            }
+            
+            .content {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .title {
+                display: flex;
+                font-size: 40px;
+                color: white;
+                font-weight: 600;
+            }
+
+            #root {
+                margin-top: 20px;
+            }
+
+            #root:hover {
+                cursor: pointer;
+            }
+
+            #winner {
+                display: flex;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='content'>
+            <div class='title'>Tic-Tac-Toe</div>
+            <canvas id='root'></canvas>
+        </div>
+        <script type='module' src='javascript/index.js'></script>
+    </body>
+</html>
