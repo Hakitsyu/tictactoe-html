@@ -27,39 +27,36 @@ const drawHorizontal = () => {
     }
 }
 
-const onWin = () => {
-    game.end();
-    
-    context.clearRect(0, 0, width, height);
-    drawHorizontal();
-    drawVertical();
-}
-
 const onClickCanvas = (event) => {
     const line = Math.trunc(event.offsetY / (height / 3));
     const column = Math.trunc(event.offsetX / (width / 3));
-    const boxSize = width / 3;
-    const boxFromX = column * boxSize;
-    const boxFromY = line * boxSize;
+    game.play(line, column);
+}
 
-    game.play(line, column, (success, turn) => {
-        if (success) {
-            turn === -1
-                ? drawerInstance.x(boxSize, boxFromX, boxFromY, 60)
-                : drawerInstance.circle(line, column, boxSize, boxFromX, boxFromY, 'white');
+function startGame() {
+    if (game != null) {
+        context.clearRect(0, 0, width, height);
+        drawVertical();
+        drawHorizontal();
+    } else {
+        drawVertical();
+        drawHorizontal();
+
+        game = new Game();
+        game.onEnd = () => { startGame() }
+        game.onPlay = (success, turn, line, column) => {
+            if (success) {
+                const boxSize = width / 3;
+                const boxFromX = column * boxSize;
+                const boxFromY = line * boxSize;            
+
+                turn === -1
+                    ? drawerInstance.x(boxSize, boxFromX, boxFromY, 60)
+                    : drawerInstance.circle(line, column, boxSize, boxFromX, boxFromY, 'white');
+            }
         }
-    });
-    
-    if (game.checkWin())
-        onWin();
+    }
 }
 
-const startGame = () => {
-    game = new Game();
-}
-
-drawVertical();
-drawHorizontal();
 startGame();
-
 canvas.addEventListener('click', onClickCanvas);
