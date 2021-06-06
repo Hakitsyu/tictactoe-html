@@ -43,8 +43,8 @@ function startGame() {
         drawHorizontal();
 
         game = new Game();
-        game.onEnd = () => { startGame() }
-        game.onPlay = (success, turn, line, column) => {
+        game.on("end", () => startGame());
+        game.on("play", (success, turn, line, column) => {
             if (success) {
                 const boxSize = width / 3;
                 const boxFromX = column * boxSize;
@@ -54,7 +54,7 @@ function startGame() {
                     ? drawerInstance.x(boxSize, boxFromX, boxFromY, 60)
                     : drawerInstance.circle(line, column, boxSize, boxFromX, boxFromY, 'white');
             }
-        }
+        });
     }
 }
 

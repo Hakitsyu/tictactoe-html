@@ -1,9 +1,10 @@
-class Game {
+import Emitter from "./emitter.js";
+
+class Game extends Emitter {
     constructor() {
+        super();
         this.region = [[], [], []];
         this.turn = -1;
-        this.onEnd = (win) => {};
-        this.onPlay = (success, turn, line, column) => {};
     }
 
     play = (line, column) => {
@@ -14,13 +15,13 @@ class Game {
             if (win || this.regionLength() === 9) {
                 const turn = this.turn;
                 this.end();
-                win ? this.onEnd(true, turn) : this.onEnd(false);
+                win ? this.emit("end", true, turn) : this.emit("end", false);
             } else {
-                this.onPlay(true, this.turn, line, column);
+                this.emit("play", true, this.turn, line, column);
                 this.toggleTurn();
             }
         } else
-            this.onPlay(false, this.turn, line, column);
+            this.emit("play", false, this.turn, line, column);
     }
 
     end = () => {
